@@ -1,0 +1,6 @@
+confluent-kafka>=2.6,<3
+fastapi>=0.115,<1
+numpy>=2.0,<3
+pydantic>=2.10,<3
+pyarrow>=19,<26
+uvicorn>=0.30,<1

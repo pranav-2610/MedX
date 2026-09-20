@@ -1,0 +1,39 @@
+services:
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v26.2.3
+    command:
+      - redpanda
+      - start
+      - --kafka-addr
+      - internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr
+      - internal://redpanda:9092,external://localhost:19092
+      - --smp
+      - "1"
+      - --default-log-level=info
+    ports:
+      - "19092:19092"
+      - "19644:9644"
+    volumes:
+      - redpanda-data:/var/lib/redpanda/data
+
+  console:
+    image: docker.redpanda.com/redpandadata/console:v3.12.0
+    entrypoint: /bin/sh
+    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda:9092"]
+        redpanda:
+          adminApi:
+            enabled: true
+            urls: ["http://redpanda:9644"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redpanda
+
+volumes:
+  redpanda-data:

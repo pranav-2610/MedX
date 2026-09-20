@@ -1,0 +1,25 @@
+# Python virtual environments
+.venv/
+venv/
+
+# Python bytecode/cache
+__pycache__/
+*.py[cod]
+
+# Test/tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated runtime/archive data
+raw_events/
+
+# Local environment/config files
+.env
+.env.*
+
+# OS/editor files
+.DS_Store
+.vscode/
+.idea/
+MedX_old_git_backup/
